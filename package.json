@@ -1,0 +1,28 @@
+{
+  "name": "mern_blog",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon API/index.js",
+    "start": "node API/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Reddy0727/blog.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Reddy0727/blog/issues"
+  },
+  "homepage": "https://github.com/Reddy0727/blog#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}

@@ -18,14 +18,15 @@ function Header() {
             <TextInput 
                 type="text"
                 placeholder="Search..."
-                con={AiOutlineSearch}
+                icon={AiOutlineSearch}
                 className="hidden lg:inline"
             />
         </form>
-        <Button className="w-12 h-10" color="gray"><AiOutlineSearch /></Button>
+        <Button className="w-12 h-10 lg:hidden inline" color="gray"><AiOutlineSearch /></Button>
         <div className='flex gap-2 md:order-2'>
-            <Button className="bg-gradient-to-r from-blue-500 px-4 py-2 via-blue-600 to-blue-700 text-white hover:bg-gradient-to-br focus:ring-blue-300 dark:focus:ring-blue-800">
-    <FaMoon /></Button>
+            <Button color="blue" >
+                <FaMoon />
+            </Button>
             <Link to='/signin'>
                 <Button color="blue" outline>
                     Sign In
