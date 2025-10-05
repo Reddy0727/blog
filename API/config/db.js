@@ -16,5 +16,4 @@ const connectDB = async () => {
         console.warn('mongodb connection is now disconnected')
     })
 }
-
 export default connectDB

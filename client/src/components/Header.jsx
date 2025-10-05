@@ -11,16 +11,14 @@ function Header() {
             <span 
                 className="px-2 py-1 bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500 rounded-lg text-white"
             >
-                Red's
-            </span> Blog
+                Blog
+            </span> 
         </Link>
         <form>
-            <TextInput 
-                type="text"
-                placeholder="Search..."
-                icon={AiOutlineSearch}
-                className="hidden lg:inline"
-            />
+            <div className="flex gap-2 items-center border-1 py-1.5 px-4 border-slate-300 rounded-full">
+              <AiOutlineSearch  className="text-1.5xl bg-red"/>
+              <input type="text" placeholder="search...." className="border-none outline-none bg-transparent" />
+            </div>
         </form>
         <Button className="w-12 h-10 lg:hidden inline" color="gray"><AiOutlineSearch /></Button>
         <div className='flex gap-2 md:order-2'>
