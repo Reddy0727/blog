@@ -1,4 +1,5 @@
 import bcryptjs from "bcryptjs";
+import jwt from 'jsonwebtoken'
 import User from "../models/user.model.js";
 import { errorHandler } from "../utils/errorHandler.js";
 
@@ -34,6 +35,53 @@ export const signup = async (req, res, next) => {
       success: true,
       code: "SIGNUP_SUCCESS",
       message: "Signup successfully",
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const signin = async (req, res, next) => {
+  const { email, password } = req?.body || {};
+
+  if (!email || !password) {
+    return next(errorHandler(400, "All fields are required", "REQUIRED_FIELDS"));
+  }
+
+  try {
+    const validateUser = await User.findOne({ email });
+
+    if (!validateUser) {
+      return next(errorHandler(404, "Email not found", "USER_NOT_FOUND"));
+    }
+
+    const validatePassword = await bcryptjs.compare(
+      password,
+      validateUser.password
+    );
+
+    if (!validatePassword) {
+      return next(errorHandler(422, "Wrong password", "WRONG_PASSWORD"));
+    }
+
+    const token = jwt.sign(
+      { id: validateUser._id, email: validateUser.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "3d" }
+    );
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "Production",
+      sameSite: "strict",
+      maxAge: 3 * 24 * 60 * 60 * 1000, // 3 days
+      path: "/",
+    });
+
+    res.status(200).json({
+      success: true,
+      code: "SIGNIN_SUCCESS",
+      message: "Signed in successfully",
     });
   } catch (error) {
     next(error);
