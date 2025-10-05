@@ -82,6 +82,11 @@ export const signin = async (req, res, next) => {
       success: true,
       code: "SIGNIN_SUCCESS",
       message: "Signed in successfully",
+      data:{
+        id:validateUser._id,
+        username:validateUser.username,
+        email:validateUser.email
+      }
     });
   } catch (error) {
     next(error);
