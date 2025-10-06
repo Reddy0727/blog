@@ -1,10 +1,12 @@
-import { Button, Navbar, NavbarCollapse, NavbarLink, NavbarToggle, TextInput } from "flowbite-react"
+import { Avatar, Button, Dropdown, DropdownDivider, DropdownHeader, DropdownItem, Navbar, NavbarCollapse, NavbarLink, NavbarToggle, TextInput } from "flowbite-react"
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from 'react-icons/fa';
+import { useSelector } from "react-redux";
 
 function Header() {
     const pathname = useLocation().pathname;
+    const {currentUser} = useSelector((state)=>state.user)
   return (
     <Navbar className="border-b-1 p-4" fluid rounded>
         <Link to='/' className="self-center flex justify-between items-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white">
@@ -25,11 +27,41 @@ function Header() {
             <Button color="blue" >
                 <FaMoon />
             </Button>
-            <Link to='/signin'>
-                <Button color="blue" outline>
-                    Sign In
-                </Button>
-          </Link>
+            {currentUser ? 
+               (
+                <Dropdown
+                  arrowIcon={false}
+                  inline
+                  label={
+                    <Avatar
+                      alt="user avatar"
+                      img={currentUser.data.profilePicture}
+                      rounded
+                    
+                    />
+                  }
+                >
+                  <DropdownHeader>
+                    <span className="block text-sm">@{currentUser.data.username}</span>
+                    <span className="block text-sm">{currentUser.data.email}</span>
+                  </DropdownHeader>
+                  <Link to='/dashboard?tab=profile'>
+                    <DropdownItem>
+                      Profile
+                    </DropdownItem>
+                  </Link>
+                  <DropdownDivider />
+                  <DropdownItem>Sign out</DropdownItem>
+                </Dropdown>
+               ) 
+               : (
+                 <Link to='/signin'>
+                    <Button color="blue" outline>
+                        Sign In
+                    </Button>
+                  </Link>
+               )
+            }
           
         </div>
         <NavbarToggle />
