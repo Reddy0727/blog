@@ -2,11 +2,14 @@ import { Avatar, Button, Dropdown, DropdownDivider, DropdownHeader, DropdownItem
 import { Link, useLocation } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from 'react-icons/fa';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleTheme } from "../redux/theme/themeSlice";
 
 function Header() {
     const pathname = useLocation().pathname;
     const {currentUser} = useSelector((state)=>state.user)
+    const {theme} = useSelector((state)=>state.theme)
+    const dispatch = useDispatch()
   return (
     <Navbar className="border-b-1 p-4" fluid rounded>
         <Link to='/' className="self-center flex justify-between items-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white">
@@ -24,8 +27,8 @@ function Header() {
         </form>
         <Button className="w-12 h-10 lg:hidden inline" color="gray"><AiOutlineSearch /></Button>
         <div className='flex gap-2 md:order-2'>
-            <Button color="blue" >
-                <FaMoon />
+            <Button color="blue" onClick={()=>dispatch(toggleTheme())}>
+                {theme === 'light' ? <FaMoon /> : <FaSun />}
             </Button>
             {currentUser ? 
                (
