@@ -10,7 +10,8 @@ import Signin from './pages/Signin.jsx'
 import Home from './pages/Home.jsx'
 import About from './pages/About.jsx'
 import { Provider } from 'react-redux'
-import { store } from './redux/store.js'
+import { store, persistor } from './redux/store.js'
+import { PersistGate } from 'redux-persist/integration/react'
 
 const routes = createBrowserRouter([
   {
@@ -30,8 +31,10 @@ const routes = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <Provider store={store}>
-      <RouterProvider router={routes} />
-    </Provider>
+    <PersistGate persistor={persistor}>
+      <Provider store={store}>
+          <RouterProvider router={routes} />
+      </Provider>
+    </PersistGate>
   </StrictMode>,
 )
