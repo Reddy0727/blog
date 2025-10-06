@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useSelector,useDispatch } from'react-redux'
 import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice.js"
+import OAuth from "../components/OAuth.jsx"
 
 function Signin() {
 
@@ -99,6 +100,7 @@ function Signin() {
             </button>
         </div>
         <p className="mt-4 mb-0 leading-normal text-sm">Don't have an account? <Link className="font-bold text-slate-700" to='/signup'>Sign up</Link></p>
+        <OAuth />
       </form>
     </div>
     

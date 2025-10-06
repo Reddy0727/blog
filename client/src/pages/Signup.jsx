@@ -2,6 +2,7 @@ import { Spinner } from "flowbite-react"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import OAuth from "../components/OAuth"
 
 function Signup() {
 
@@ -101,7 +102,9 @@ function Signup() {
               </div>}
             </button>
         </div>
+         <OAuth />
         <p className="mt-4 mb-0 leading-normal text-sm">Already have an account? <a className="font-bold text-slate-700" href="../pages/sign-in.html">Sign in</a></p>
+       
       </form>
     </div>
     
