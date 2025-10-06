@@ -2,11 +2,14 @@ import { Spinner } from "flowbite-react"
 import { useState } from "react"
 import { Link, useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
+import { useSelector,useDispatch } from'react-redux'
+import { signInFailure, signInStart, signInSuccess } from "../redux/user/userSlice.js"
 
 function Signin() {
 
   const [formData,setFormData] = useState({})
-  const [isLoading,setLoading] = useState(false)
+  const { loading, error : errorMessage } = useSelector((state)=>state.user);
+  const dispatch = useDispatch()
   const navigate = useNavigate()
 
 
@@ -16,9 +19,9 @@ function Signin() {
 
  const handleSubmit = async (e) => {
   e.preventDefault();
-  setLoading(true);
 
   try {
+     dispatch(signInStart());
     const res = await fetch("/api/auth/signin", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -29,15 +32,16 @@ function Signin() {
 
     if (!res.ok || !data.success) {
       toast.error(data.message || "Signup failed");
+      dispatch(signInFailure(data.message));
     } else {
       toast.success(data.message || "Signup successful");
-       navigate("/");
+      dispatch(signInSuccess(data));
+      navigate("/");
     }
   } catch (error) {
     toast.error(error.message || "Something went wrong");
-  } finally {
-    setLoading(false);
-  }
+    dispatch(signInFailure(error.message));
+  } 
 };
 
 
@@ -83,8 +87,11 @@ function Signin() {
 
         <div className="text-center">
           <button 
-            className="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white" type="submit">
-             {!isLoading ? 'Sign in' 
+            className="inline-block w-full px-6 py-3 mt-6 mb-2 font-bold text-center text-white uppercase align-middle transition-all bg-transparent border-0 rounded-lg cursor-pointer active:opacity-85 hover:scale-102 hover:shadow-soft-xs leading-pro text-xs ease-soft-in tracking-tight-soft shadow-soft-md bg-150 bg-x-25 bg-gradient-to-tl from-gray-900 to-slate-800 hover:border-slate-700 hover:bg-slate-700 hover:text-white" 
+            type="submit"
+            disabled={loading}
+          >
+             {!loading ? 'Sign in' 
              : <div>
                  <Spinner size="sm"/>
                  <span className="px-4">Loading...</span>
