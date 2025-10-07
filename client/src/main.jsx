@@ -13,16 +13,9 @@ import { Provider } from 'react-redux'
 import { store, persistor } from './redux/store.js'
 import { PersistGate } from 'redux-persist/integration/react'
 import ThemeProvider from './components/ThemeProvider'
+import PrivateRoute from './components/PrivateRoute.jsx'
 
-import { createBrowserRouter } from 'react-router-dom';
-import Layout from './Layout';
-import Home from './Home';
-import Dashboard from './Dashboard';
-import Projects from './Projects';
-import About from './About';
-import Signin from './Signin';
-import Signup from './Signup';
-import PrivateRoute from './PrivateRoute';
+
 
 const routes = createBrowserRouter([
   {
